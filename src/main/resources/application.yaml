@@ -51,6 +51,7 @@ springdoc:
 logging:
   level:
     root: INFO
+    com.microservice.*: DEBUG
   ######## CIRCRUIT BREAKR ########
 resilience4j:
   circuitbreaker:

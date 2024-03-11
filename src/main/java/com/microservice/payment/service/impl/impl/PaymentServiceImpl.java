@@ -38,7 +38,7 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public PaymentDTO pay(final PaymentDTO paymentDTO) {
         log.info("Payment adding in process...");
-        log.trace("Payment information: {}", paymentDTO);
+        log.debug("Payment information: {}", paymentDTO);
         new PaymentCommand.CommandBuilder()
                 .addCommand(new MinimumAmountValidation(
                         paymentDTO.getAmount(),
@@ -56,11 +56,11 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public PaymentDTO update(final String id, final PaymentDTO paymentDTO) {
         log.info("Processing to update pay: {}", id);
-        log.trace("Updated payment: {}", paymentDTO);
+        log.debug("Updated payment: {}", paymentDTO);
         Payment payment = paymentRepository
                 .findById(id)
                 .orElseThrow(() -> new NotFoundException(PAYMENT_NOT_FOUND));
-        log.trace("Previous payment: {}", payment);
+        log.debug("Previous payment: {}", payment);
         new PaymentCommand.CommandBuilder()
                 .addCommand(new MinimumAmountValidation(
                         paymentDTO.getAmount(),

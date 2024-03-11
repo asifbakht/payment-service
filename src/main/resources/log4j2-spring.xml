@@ -28,8 +28,7 @@
          <AppenderRef ref="RollingFile" />
       </Root>
 
-      <!-- LOG "com.facebook.**" at TRACE level -->
-      <Logger name="com.social.*" level="trace"></Logger>
+      <Logger name="com.microservice.*" level="trace"></Logger>
    </Loggers>
 
 </Configuration>

@@ -21,7 +21,7 @@ spring:
   ######## DB PROPERTIES ########
   datasource:
     #    url: jdbc:mysql://localhost/customer-db?createDatabaseIfNotExist=true
-    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/customer-db?createDatabaseIfNotExist=true
+    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/payment-db?createDatabaseIfNotExist=true
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
@@ -30,7 +30,7 @@ spring:
     hikari.maxLifetime: 1800000
   ######## DB MIGRATION ########
   flyway:
-    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/customer-db?createDatabaseIfNotExist=true
+    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/payment-db?createDatabaseIfNotExist=true
     user: ${DB_USERNAME}
     password: ${DB_PASSWORD}
     baseline:
@@ -41,6 +41,9 @@ spring:
   redis:
     host: ${REDIS_HOST}
     port: ${REDIS_PORT}
+  ######### SHED LOCK ########
+  cron:
+    pending-payment: ${SHED_LOCK_PENDING_PAYMENT}
   ######## SPRINT DOC ########
 springdoc:
   api-docs:

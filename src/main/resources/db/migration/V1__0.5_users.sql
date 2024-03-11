@@ -44,3 +44,12 @@ CREATE TABLE IF NOT EXISTS `payment` (
     `date_created` timestamp DEFAULT NOW(),
     `date_updated` timestamp NOT NULL DEFAULT NOW() ON UPDATE NOW()
 )ENGINE=InnoDB DEFAULT CHARSET=UTF8;
+
+
+CREATE TABLE IF NOT EXISTS `shedlock` (
+  name VARCHAR(64) NOT NULL,
+  lock_until TIMESTAMP(3) NOT NULL,
+  locked_at TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+  locked_by VARCHAR(255) NOT NULL,
+  PRIMARY KEY (name)
+)

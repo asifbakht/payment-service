@@ -29,6 +29,7 @@
 		<!-- jwt version -->
 		<maven.plugin.version>3.2.1</maven.plugin.version>
 		<io.jwt.version>0.12.3</io.jwt.version>
+		<spring.shedlock.version>5.12.0</spring.shedlock.version>
 		<!-- sonar configuration -->
 		<sonar.projectKey>com.microservice.microservice:bankpayment</sonar.projectKey>
 		<sonar.projectName>bankpayment</sonar.projectName>
@@ -92,6 +93,19 @@
 			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
 		<!-- Redis Cache -->
+
+		<!-- shedlock for scheduling in one instance -->
+		<dependency>
+			<groupId>net.javacrumbs.shedlock</groupId>
+			<artifactId>shedlock-spring</artifactId>
+			<version>${spring.shedlock.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.javacrumbs.shedlock</groupId>
+			<artifactId>shedlock-provider-jdbc-template</artifactId>
+			<version>${spring.shedlock.version}</version>
+		</dependency>
+		<!-- shedlock for scheduling in one instance -->
 		<!-- spring jpa-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

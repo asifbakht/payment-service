@@ -40,6 +40,9 @@ spring:
   redis:
     host: 127.0.0.1
     port: 6379
+  ######### SHED LOCK ###########
+  cron:
+    pending-payment: "*/10 * * * * *"
   ######## SPRING DOC ########
 springdoc:
   api-docs:

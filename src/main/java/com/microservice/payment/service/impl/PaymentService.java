@@ -17,6 +17,8 @@ public interface PaymentService {
 
     PaymentDTO cancel(final String id);
 
+    PaymentDTO get(final String id);
+
     PaymentDTO update(final String id, final PaymentDTO paymentDTO);
 
     Page<PaymentDTO> getAllPayments(final Pageable pageable, final String customerId);

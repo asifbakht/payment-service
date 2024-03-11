@@ -62,14 +62,19 @@ public class PaymentController {
      */
     @PostMapping()
     @CachePut(value = CACHE_PAYMENT, key = "#id")
-    @ResponseStatus(HttpStatus.CREATED)
     @CircuitBreaker(name = PAYMENT_SERVICE, fallbackMethod = "serviceUnavailable")
+    @Operation(summary = "add payment")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = Response.class))),
+            @ApiResponse(responseCode = "409", content = @Content(schema = @Schema(implementation = Response.class))),
+            @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(implementation = ResponseError.class)))
+    })
     public ResponseEntity<?> addPayment(final @Valid @RequestBody PaymentDTO paymentDTO) {
         try {
             log.info("Pay api initiated: {}", paymentDTO.getPaymentMethodId());
             final PaymentDTO responseDTO = paymentService.pay(paymentDTO);
             log.info("Payment add api completed");
-            return ResponseEntity.status(HttpStatus.OK).body(new Response<>(responseDTO));
+            return ResponseEntity.status(HttpStatus.CREATED).body(new Response<>(responseDTO));
         } catch (final GenericException | IllegalArgumentException e) {
             log.error("Error occurred: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(e.getMessage()));
@@ -84,8 +89,14 @@ public class PaymentController {
      * @return {@link ResponseEntity<Response>} response with message or error
      */
     @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
     @CircuitBreaker(name = PAYMENT_SERVICE, fallbackMethod = "serviceUnavailable")
+    @Operation(summary = "update payment by id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", content = @Content(schema = @Schema(implementation = Response.class))),
+            @ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = Response.class))),
+            @ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = Response.class))),
+            @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(implementation = ResponseError.class)))
+    })
     public ResponseEntity<?> updatePayment(final @Valid @RequestBody PaymentDTO paymentDTO,
                                            @PathVariable("id") final String id) {
         try {
@@ -103,6 +114,36 @@ public class PaymentController {
         }
     }
 
+
+    /**
+     * @return {@link Response} response with status
+     */
+    @Operation(summary = "get payment information by id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = Response.class))),
+            @ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = Response.class))),
+            @ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = Response.class))),
+            @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(implementation = ResponseError.class)))
+    })
+    @GetMapping("/{id}")
+    public ResponseEntity<?> get(@PathVariable("id") final String id) {
+        log.info("get customer api: {}", id);
+        try {
+            log.info("Fetch payment api initiated: {}", id);
+            Objects.requireNonNull(id, "id is required");
+            final PaymentDTO responseDTO = paymentService.get(id);
+            log.info("Fetch api api completed, {}", id);
+            return ResponseEntity.status(HttpStatus.OK).body(new Response<>(responseDTO));
+        } catch (final NotFoundException e) {
+            log.error("Error occurred: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<>(e.getMessage()));
+        } catch (final GenericException | NullPointerException | IllegalArgumentException e) {
+            log.error("Error occurred: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>(e.getMessage()));
+        }
+
+    }
+
     /**
      * This function cancel user pending payment based on conditions
      *
@@ -111,8 +152,14 @@ public class PaymentController {
      */
     @GetMapping("/cancel/{id}")
     @Cacheable(value = CACHE_PAYMENT, key = "#id")
-    @ResponseStatus(HttpStatus.OK)
     @CircuitBreaker(name = PAYMENT_SERVICE, fallbackMethod = "serviceUnavailable")
+    @Operation(summary = "cancel payment if its in pending state")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = Response.class))),
+            @ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = Response.class))),
+            @ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = Response.class))),
+            @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(implementation = ResponseError.class)))
+    })
     public ResponseEntity<?> cancelPayment(@PathVariable("id") final String id) {
         try {
             log.info("Payment cancel api initiated: {}", id);
@@ -138,10 +185,10 @@ public class PaymentController {
      */
     @Operation(summary = "Returns a paginated customer payments")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200"),
+            @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = Response.class))),
             @ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = Response.class))),
-            @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(implementation = ResponseError.class))),
-            @ApiResponse(responseCode = "403", content = @Content(schema = @Schema(implementation = ResponseError.class)))
+            @ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = Response.class))),
+            @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(implementation = ResponseError.class)))
     })
     @GetMapping("/search/{customerId}")
     @Cacheable(value = CACHE_PAYMENT, key = "#customerId")

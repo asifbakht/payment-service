@@ -132,6 +132,23 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     /**
+     * retrieve payment from database by payment id
+     *
+     * @param id {@link String} payment id
+     * @return {@link PaymentDTO} payment dto object
+     */
+    @Override
+    public PaymentDTO get(String id) {
+        log.info("Fetching payment in process: {}", id);
+        final Payment payment = paymentRepository
+                .findById(id)
+                .orElseThrow(() -> new NotFoundException(PAYMENT_NOT_FOUND));
+        log.debug("Payment information: {}", payment);
+        log.info("Payment fetched");
+        return mapper.toDTO(payment);
+    }
+
+    /**
      * get all payment of customer from database
      *
      * @param pageable   {@link Pageable} pagination properties

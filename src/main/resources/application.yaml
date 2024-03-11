@@ -51,6 +51,23 @@ springdoc:
 logging:
   level:
     root: INFO
+  ######## CIRCRUIT BREAKR ########
+resilience4j:
+  circuitbreaker:
+    instances:
+      payment-service:
+        failureRateThreshold: 25
+        minimumNumberOfCalls: 10
+        permittedNumberOfCallsInHalfOpenState: 10
+        slidingWindowSize: 55
+        waitDurationInOpenState: 10s
+        slidingWindowType: COUNT_BASED
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        registerHealthIndicator: true
+        ignoreExceptions:
+          - com.microservice.payment.exception.DuplicateException
+          - com.microservice.payment.exception.NotFoundException
+          - com.microservice.payment.exception.GenericException
   ######### CUSTOM PAYMENT PROPERTIES ##########
 payment:
   modification: 2

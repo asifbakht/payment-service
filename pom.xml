@@ -65,6 +65,13 @@
 			<scope>provided</scope>
 		</dependency>
 		<!-- boiler code reduction -->
+		<!-- Spring circuit breaker -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-circuitbreaker-resilience4j</artifactId>
+			<version>3.1.0</version>
+		</dependency>
+		<!-- Spring circuit breaker -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>

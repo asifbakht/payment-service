@@ -36,7 +36,7 @@ public class PaymentServiceImpl implements PaymentService {
     private final PaymentMapper mapper;
 
     @Override
-    public void pay(final PaymentDTO paymentDTO) {
+    public PaymentDTO pay(final PaymentDTO paymentDTO) {
         log.info("Payment adding in process...");
         log.trace("Payment information: {}", paymentDTO);
         new PaymentCommand.CommandBuilder()
@@ -50,6 +50,7 @@ public class PaymentServiceImpl implements PaymentService {
         payment.setProcessingTime(getProcessingDateTime(processInDays));
         payment = paymentRepository.save(payment);
         log.info("Payment add completed: {}", payment.getId());
+        return mapper.toDTO(payment);
     }
 
     @Override

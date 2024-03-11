@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface PaymentService {
 
-    void pay(final PaymentDTO paymentDTO);
+    PaymentDTO pay(final PaymentDTO paymentDTO);
 
     void cancel(final String id);
 

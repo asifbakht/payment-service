@@ -28,4 +28,12 @@ public class Helper {
 
     }
 
+    public static String getCurrentUTCDateTime() {
+        return LocalDateTime
+                .of(
+                        LocalDate.now(ZoneId.of(ZONE_UTC)),
+                        LocalTime.now()).format(ISO_LOCAL_DATE_TIME);
+
+    }
+
 }

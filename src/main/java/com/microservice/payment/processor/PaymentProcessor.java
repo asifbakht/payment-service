@@ -8,6 +8,8 @@ import net.javacrumbs.shedlock.spring.annotation.SchedulerLock;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import static com.microservice.payment.utils.Helper.getCurrentUTCDateTime;
+
 /**
  * class that is responsible to process all pending payments
  * this class will run on scheduler bases/
@@ -42,7 +44,9 @@ class PaymentProcessor {
         // memory heap issue then each payment will be processed individually
 
         try {
-            paymentRepository.processPendingPayment(PaymentStatus.PROCESSED.name(), PaymentStatus.PENDING.name());
+            paymentRepository.processPendingPayment(PaymentStatus.PROCESSED.name(),
+                    PaymentStatus.PENDING.name(),
+                    getCurrentUTCDateTime());
         } catch (final Exception e) {
             log.error("Error occurred processing pending payments, error: {}", e.getMessage());
         }

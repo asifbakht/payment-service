@@ -1,5 +1,6 @@
 package com.microservice.payment.dto;
 
+import com.microservice.payment.dto.payment.PaymentDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
@@ -10,5 +11,5 @@ import io.swagger.v3.oas.annotations.media.Schema;
  * @since 2024
  */
 public record Response<T>(
-        @Schema(description = "Content") T content) {
+        @Schema(description = "Content", anyOf = { String.class, PaymentDTO.class}) T content) {
 }

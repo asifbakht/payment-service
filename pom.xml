@@ -9,7 +9,7 @@
 		<version>3.2.1</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.banking</groupId>
+	<groupId>com.microservice</groupId>
 	<artifactId>payment</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>payment</name>
@@ -22,23 +22,23 @@
 		<spring-doc.version>2.2.0</spring-doc.version>
 		<!-- code coverage library version -->
 		<jacoco.version>0.8.11</jacoco.version>
-		<!-- liquibase version -->
 		<!-- mysql version -->
 		<mysql.version>8.2.0</mysql.version>
 		<!-- jacoco version -->
 		<jacoco.version>0.8.11</jacoco.version>
 		<!-- jwt version -->
+		<maven.plugin.version>3.2.1</maven.plugin.version>
 		<io.jwt.version>0.12.3</io.jwt.version>
 		<!-- sonar configuration -->
-		<sonar.projectKey>com.social.auth:security</sonar.projectKey>
-		<sonar.projectName>auth</sonar.projectName>
+		<sonar.projectKey>com.microservice.microservice:bankpayment</sonar.projectKey>
+		<sonar.projectName>bankpayment</sonar.projectName>
 		<sonar.language>java</sonar.language>
 		<sonar.java.source>17</sonar.java.source>
 		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
 		<sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
 		<sonar.tests>${project.basedir}/src/test/java</sonar.tests>
 		<sonar.sources>${project.basedir}/src/main/java</sonar.sources>
-		<sonar.coverage.exclusions>**/*Config.java,**/auth/**/*.java,**/entity/*/*.java</sonar.coverage.exclusions>
+		<sonar.coverage.exclusions>**/*Config.java,**/microservice/**/*.java,**/entity/*/*.java</sonar.coverage.exclusions>
 		<!-- test case configuration -->
 		<skipIT>false</skipIT>
 		<skipUT>false</skipUT>
@@ -69,18 +69,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
-
 		<!-- spring REST MVC -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		<!-- spring security -->
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.boot</groupId>-->
-<!--			<artifactId>spring-boot-starter-security</artifactId>-->
-<!--		</dependency>-->
-		<!-- apache common library -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
@@ -107,7 +100,6 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
 		<!-- Test libraries -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -132,20 +124,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-maven-plugin</artifactId>
-			<version>3.2.1</version>
-		</dependency>
-		<!-- jwt token library -->
-		<dependency>
-			<groupId>io.jsonwebtoken</groupId>
-			<artifactId>jjwt-jackson</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>io.jsonwebtoken</groupId>
-			<artifactId>jjwt-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>io.jsonwebtoken</groupId>
-			<artifactId>jjwt-impl</artifactId>
+			<version>${maven.plugin.version}</version>
 		</dependency>
 		<!-- Log4j library -->
 		<dependency>
@@ -166,14 +145,12 @@
 			<artifactId>mysql-connector-j</artifactId>
 			<version>${mysql.version}</version>
 		</dependency>
-		
 		<!-- code coverage -->
 		<dependency>
 			<groupId>org.jacoco</groupId>
 			<artifactId>jacoco-maven-plugin</artifactId>
 			<version>${jacoco.version}</version>
 		</dependency>
-
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
@@ -183,21 +160,6 @@
 				<version>${spring-cloud.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
-			</dependency>
-			<dependency>
-				<groupId>io.jsonwebtoken</groupId>
-				<artifactId>jjwt-api</artifactId>
-				<version>${io.jwt.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>io.jsonwebtoken</groupId>
-				<artifactId>jjwt-impl</artifactId>
-				<version>${io.jwt.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>io.jsonwebtoken</groupId>
-				<artifactId>jjwt-jackson</artifactId>
-				<version>${io.jwt.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

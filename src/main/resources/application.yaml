@@ -1,0 +1,68 @@
+server:
+  port: 9999
+  shutdown: graceful
+
+spring:
+  application:
+    name: payment-service
+  mvc:
+    servlet:
+      path: /api/v1/payment
+  threads:
+    virtual:
+      enabled: true #Spring 3.2 feature
+  ######## JPA ########
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    show-sql: true
+    properties:
+      hibernate:
+        format-sql: true
+  ######## DB PROPERTIES ########
+  datasource:
+#    url: jdbc:mysql://localhost/customer-db?createDatabaseIfNotExist=true
+    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/customer-db?createDatabaseIfNotExist=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    hikari.connectionTimeout: 100000
+    hikari.idleTimeout: 600000
+    hikari.maxLifetime: 1800000
+  ######## DB MIGRATION ########
+  flyway:
+    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/customer-db?createDatabaseIfNotExist=true
+    user: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    baseline:
+      version: 1
+    locations: classpath:db/migration
+    enabled: true
+  ######## EUREKA PROPERTIES ########
+eureka:
+  client:
+    enabled: false
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+    fetchRegistry: true
+    healthcheck:
+      enabled: true
+  instance:
+    preferIpAddress: true
+    leaseRenewalIntervalInSeconds: 10
+  ######## SPRINT DOC ########
+springdoc:
+  api-docs:
+    path: /authentication-docs
+  swagger-ui:
+    path: /authentication-docs/swagger-ui-custom.html
+  show-actuator: true
+  ######## LOGGING ########
+logging:
+  level:
+    root: INFO
+  liquibase: INFO
+  ######### CUSTOM PROPERTIES ##########
+payment:
+  modification: 2
+  processing:
+    day: 1 # days to add to finalize and process payments

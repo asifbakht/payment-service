@@ -51,7 +51,8 @@ springdoc:
   ######## LOGGING ########
 logging:
   level:
-    root: INFO
+    root: ${LOG_ROOT_LEVEL}
+    com.microservice.*: ${LOG_APP_LEVEL}
   ######## CIRCRUIT BREAKR ########
 resilience4j:
   circuitbreaker:
@@ -71,9 +72,9 @@ resilience4j:
           - com.microservice.payment.exception.GenericException
   ######### CUSTOM PROPERTIES ##########
 payment:
-  modification: 2
+  modification: ${TOTAL_MODIFICATION_ALLOWED}
   processing:
-    day: 1 # days to add to finalize and process payments
+    day: ${TOTAL_DAYS_TO_PROCESS_PAYMENT} # days to add to finalize and process payments
   ######### CACHE CONFIGURATION #############
 cache:
   default:

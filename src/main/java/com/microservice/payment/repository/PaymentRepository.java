@@ -12,6 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * payment related query resides here
+ *
+ * @author Asif Bakht
+ * @since 2024
+ */
 public interface PaymentRepository extends JpaRepository<Payment, String> {
 
     @Query(value = "SELECT * FROM `payment` p WHERE p.customer_id = :customerId", nativeQuery = true)

@@ -4,6 +4,12 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Value;
 import org.apache.logging.log4j.core.config.plugins.validation.constraints.NotBlank;
 
+/**
+ * class resides payment request payload properties
+ *
+ * @author Asif Bakht
+ * @since 2024
+ */
 @Value
 public class PaymentDTO {
 

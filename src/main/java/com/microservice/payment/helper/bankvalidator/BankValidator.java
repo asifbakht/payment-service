@@ -10,10 +10,23 @@ import static com.microservice.payment.utils.Constants.NUMERIC_REGEX;
 import static com.microservice.payment.utils.Constants.ROUTING_LENGTH;
 import static com.microservice.payment.utils.Constants.ROUTING_NUMBER_INVALID;
 
+/**
+ * Bank information validator class
+ *
+ * @author Asif Bakht
+ * @since 2024
+ */
 @Log4j2
 public class BankValidator {
+
+    /**
+     * validates bank routing number
+     *
+     * @param routingNumber {@link String} routing number
+     * @return {@link Boolean} validates routing number is valid
+     */
     public static boolean isValidRouting(final String routingNumber) {
-       log.info("Validating routing number");
+        log.info("Validating routing number");
         Objects.requireNonNull(routingNumber, ROUTING_NUMBER_INVALID);
         if (routingNumber.isBlank() ||
                 !routingNumber.matches(NUMERIC_REGEX) ||
@@ -35,11 +48,16 @@ public class BankValidator {
         return isInvalidRoute;
     }
 
-
+    /**
+     * validates bank account number
+     *
+     * @param accountNumber {@link String} account number
+     * @return {@link Boolean} validates account number is valid
+     */
     public static boolean isValidAccountNumber(final String accountNumber) {
         log.info("Validating bank account number");
         Objects.requireNonNull(accountNumber, ACCOUNT_NUMBER_INVALID);
-        final boolean isInvalidAccountNo =  (accountNumber.isBlank() ||
+        final boolean isInvalidAccountNo = (accountNumber.isBlank() ||
                 !accountNumber.matches(NUMERIC_REGEX) ||
                 !accountNumber.matches(BANK_ACCOUNT_REGEX));
         log.info("Account number valid: {}", !isInvalidAccountNo);

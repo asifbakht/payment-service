@@ -11,6 +11,13 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+/**
+ * entity class that have payment method
+ * related attributes
+ *
+ * @author Asif Bakht
+ * @since 2024
+ */
 @Data
 @Entity
 @Builder

@@ -17,6 +17,7 @@ import static com.microservice.payment.utils.Constants.CACHE_PAYMENT;
 
 /**
  * This class resides redis configuration
+ *
  * @author Asif Bakht
  * @since 2024
  */
@@ -33,14 +34,27 @@ public class RedisConfig {
     @Value("${cache.default.time-to-live:5}")
     private int defaultTTL;
 
+    /**
+     * create default redis connection factory that will be used
+     * within different cache manager
+     *
+     * @return {@link LettuceConnectionFactory}
+     */
     @Bean
     public LettuceConnectionFactory redisConnectionFactory() {
         final RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration(redisHost, redisPort);
         return new LettuceConnectionFactory(configuration);
     }
+
+    /**
+     * configure different types of cache, here payment is cached
+     * with payment time to live
+     *
+     * @return {@link RedisCacheManager}
+     */
     @Bean
     public RedisCacheManager cacheManager() {
-        final RedisCacheConfiguration cacheConfig = myDefaultCacheConfig (Duration.ofMinutes(defaultTTL))
+        final RedisCacheConfiguration cacheConfig = myDefaultCacheConfig(Duration.ofMinutes(defaultTTL))
                 .disableCachingNullValues();
         return RedisCacheManager
                 .builder(redisConnectionFactory())
@@ -52,6 +66,13 @@ public class RedisConfig {
                 .build();
     }
 
+    /**
+     * create default cache configuration that will be used by
+     * different cache manager
+     *
+     * @param duration {@link Duration} minutes
+     * @return {@link RedisCacheConfiguration} configuration
+     */
     private RedisCacheConfiguration myDefaultCacheConfig(final Duration duration) {
         return RedisCacheConfiguration
                 .defaultCacheConfig()

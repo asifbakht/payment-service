@@ -7,6 +7,12 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+/**
+ * base entity class properties
+ *
+ * @author Asif Bakht
+ * @since 2024
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

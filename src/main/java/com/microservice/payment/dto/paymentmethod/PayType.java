@@ -4,6 +4,12 @@ import lombok.Getter;
 
 import java.util.stream.Stream;
 
+/**
+ * class that provides different type of payment types
+ *
+ * @author Asif Bakht
+ * @since 2024
+ */
 @Getter
 public enum PayType {
 

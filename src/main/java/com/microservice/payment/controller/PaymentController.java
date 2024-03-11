@@ -38,6 +38,14 @@ import static com.microservice.payment.utils.Constants.PAYMENT_SERVICE;
 import static com.microservice.payment.utils.Constants.REQUIRE_ID;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
+/**
+ * Payment controller that provide accessibility
+ * to payment apis. This control helps user to
+ * cancel, update, add, fetch all their payments
+ *
+ * @author Asif Bakht
+ * @since 2024
+ */
 @Log4j2
 @RestController
 @RequiredArgsConstructor
@@ -46,6 +54,12 @@ public class PaymentController {
 
     private final PaymentService paymentService;
 
+    /**
+     * This function add user payment received through post api
+     *
+     * @param paymentDTO {@link PaymentDTO} payment payload
+     * @return {@link ResponseEntity<Response>} response with message or error
+     */
     @PostMapping()
     @CachePut(value = CACHE_PAYMENT, key = "#id")
     @ResponseStatus(HttpStatus.CREATED)
@@ -62,7 +76,13 @@ public class PaymentController {
         }
     }
 
-
+    /**
+     * This function update existing pending payment through post api
+     *
+     * @param paymentDTO {@link PaymentDTO} payment payload
+     * @param id         {@link String} payment id
+     * @return {@link ResponseEntity<Response>} response with message or error
+     */
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     @CircuitBreaker(name = PAYMENT_SERVICE, fallbackMethod = "serviceUnavailable")
@@ -83,6 +103,12 @@ public class PaymentController {
         }
     }
 
+    /**
+     * This function cancel user pending payment based on conditions
+     *
+     * @param id {@link String} payment id
+     * @return {@link ResponseEntity<Response>} response with message or error
+     */
     @GetMapping("/cancel/{id}")
     @Cacheable(value = CACHE_PAYMENT, key = "#id")
     @ResponseStatus(HttpStatus.OK)
@@ -103,10 +129,17 @@ public class PaymentController {
         }
     }
 
+    /**
+     * This function retrieve user payments with pagination
+     *
+     * @param customerId  {@link String} customer id
+     * @param pageRequest {@link Pageable} page size properties
+     * @return {@link ResponseEntity<ResponsePager>} response with message or error
+     */
     @Operation(summary = "Returns a paginated customer payments")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200"),
-            @ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = ResponseError.class))),
+            @ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = Response.class))),
             @ApiResponse(responseCode = "500", content = @Content(schema = @Schema(implementation = ResponseError.class))),
             @ApiResponse(responseCode = "403", content = @Content(schema = @Schema(implementation = ResponseError.class)))
     })
@@ -137,6 +170,14 @@ public class PaymentController {
 
     }
 
+    /**
+     * circuit breaker to avoid error calls for adding payment
+     *
+     * @param paymentDTO {@link PaymentDTO} payment payload
+     * @param e          {@link Throwable} unexpected exception
+     * @return {@link ResponseEntity} response entity with 503 error code
+     * @throws Throwable {@link Throwable} exception during process
+     */
     private ResponseEntity<?> serviceUnavailable(final PaymentDTO paymentDTO,
                                                  final Throwable e) throws Throwable {
         log.error("Could not process payment, customerId: {}, error: {}",
@@ -144,6 +185,15 @@ public class PaymentController {
         throw e;
     }
 
+    /**
+     * circuit breaker to avoid error calls for updating payment
+     *
+     * @param paymentDTO {@link PaymentDTO} payment payload
+     * @param id         {@link String} payment id
+     * @param e          {@link Throwable} unexpected exception
+     * @return {@link ResponseEntity} response entity with 503 error code
+     * @throws Throwable {@link Throwable} exception during process
+     */
     private ResponseEntity<?> serviceUnavailable(final PaymentDTO paymentDTO,
                                                  final String id,
                                                  final Throwable e) throws Throwable {
@@ -151,12 +201,29 @@ public class PaymentController {
         throw e;
     }
 
+    /**
+     * circuit breaker to avoid error calls for cancelling payment
+     *
+     * @param id {@link String} payment id
+     * @param e  {@link Throwable} unexpected exception
+     * @return {@link ResponseEntity} response entity with 503 error code
+     * @throws Throwable {@link Throwable} exception during process
+     */
     private ResponseEntity<?> serviceUnavailable(final String id,
                                                  final Throwable e) throws Throwable {
         log.error("Could not process payment, id: {}, error: {}", id, e.getMessage());
         throw e;
     }
 
+    /**
+     * circuit breaker to avoid error calls for cancelling payment
+     *
+     * @param customerId  {@link String} customer id
+     * @param pageRequest {@link Pageable} pagination properties
+     * @param e           {@link Throwable} unexpected exception
+     * @return {@link ResponseEntity} response entity with 503 error code
+     * @throws Throwable {@link Throwable} exception during process
+     */
     private ResponseEntity<?> serviceUnavailable(final String customerId,
                                                  final Pageable pageRequest,
                                                  final Throwable e) throws Throwable {

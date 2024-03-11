@@ -54,10 +54,10 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public void update(final String id, final PaymentDTO paymentDTO) {
+    public PaymentDTO update(final String id, final PaymentDTO paymentDTO) {
         log.info("Processing to update pay: {}", id);
         log.trace("Updated payment: {}", paymentDTO);
-        final Payment payment = paymentRepository
+        Payment payment = paymentRepository
                 .findById(id)
                 .orElseThrow(() -> new NotFoundException(PAYMENT_NOT_FOUND));
         log.trace("Previous payment: {}", payment);
@@ -76,22 +76,24 @@ public class PaymentServiceImpl implements PaymentService {
                 .build().executeAll();
         payment.setPaymentMethodId(paymentDTO.getPaymentMethodId());
         payment.setAmount(paymentDTO.getAmount());
-        paymentRepository.save(payment);
+        payment = paymentRepository.save(payment);
         log.info("Payment update completed");
+        return mapper.toDTO(payment);
     }
 
     @Override
-    public void cancel(final String id) {
+    public PaymentDTO cancel(final String id) {
         log.info("Cancelling payment in process: {}", id);
-        final Payment payment = paymentRepository
+        Payment payment = paymentRepository
                 .findById(id)
                 .orElseThrow(() -> new NotFoundException(PAYMENT_NOT_FOUND));
         new PaymentCommand.CommandBuilder()
                 .addCommand(new PendingStatusValidation(payment.getStatus()))
                 .build().executeAll();
         payment.setStatus(PaymentStatus.CANCELLED.name());
-        paymentRepository.save(payment);
+        payment = paymentRepository.save(payment);
         log.info("Payment saved with cancel status");
+        return mapper.toDTO(payment);
     }
 
 

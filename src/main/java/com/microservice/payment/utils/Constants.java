@@ -14,6 +14,7 @@ public final class Constants {
    * static variables across application
    */
 
+  public static final String CACHE_PAYMENT = "payment";
   public static final String REQUIRE_ID = "id cannot be null";
 
   public static final String REQUIRE_CUSTOMER_ID = "customerId cannot be null";

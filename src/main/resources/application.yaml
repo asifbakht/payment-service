@@ -36,6 +36,10 @@ spring:
       version: 1
     locations: classpath:db/migration
     enabled: true
+  ######## REDIS CACHE #######
+  redis:
+    host: 127.0.0.1
+    port: 6379
   ######## SPRING DOC ########
 springdoc:
   api-docs:
@@ -52,3 +56,9 @@ payment:
   modification: 2
   processing:
     day: 1 # days to add to finalize and process payments
+  ######### CACHE CONFIGURATION #############
+cache:
+  default:
+    time-to-live: 5 #minutes
+  payment:
+    time-to-live: 10 # minutes

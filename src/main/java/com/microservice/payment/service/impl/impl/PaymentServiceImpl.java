@@ -22,6 +22,12 @@ import static com.microservice.payment.utils.Constants.MINIMUM_PAYMENT_AMOUNT;
 import static com.microservice.payment.utils.Constants.PAYMENT_NOT_FOUND;
 import static com.microservice.payment.utils.Helper.getProcessingDateTime;
 
+/**
+ * Payment crud operation functionality resides here
+ *
+ * @author Asif Bakht
+ * @since 2024
+ */
 @Log4j2
 @Service
 @RequiredArgsConstructor
@@ -35,6 +41,13 @@ public class PaymentServiceImpl implements PaymentService {
     private final PaymentRepository paymentRepository;
     private final PaymentMapper mapper;
 
+    /**
+     * create payment in database, it will check the minimum amount
+     * if less than minimum amount then throw exception
+     *
+     * @param paymentDTO {@link PaymentDTO} payment dto object
+     * @return {@link PaymentDTO} payment dto object
+     */
     @Override
     public PaymentDTO pay(final PaymentDTO paymentDTO) {
         log.info("Payment adding in process...");
@@ -53,6 +66,19 @@ public class PaymentServiceImpl implements PaymentService {
         return mapper.toDTO(payment);
     }
 
+    /**
+     * update payment in database, it will check following:
+     * 1. payment exists in database
+     * 2. minimum amount if less than minimum amount
+     * then throw exception
+     * 3. total times modification is allowed after
+     * that throw exception
+     * 4. validate if the payment is in pending state
+     * or else throw exception
+     *
+     * @param paymentDTO {@link PaymentDTO} payment dto object
+     * @return {@link PaymentDTO} payment dto object
+     */
     @Override
     public PaymentDTO update(final String id, final PaymentDTO paymentDTO) {
         log.info("Processing to update pay: {}", id);
@@ -81,6 +107,15 @@ public class PaymentServiceImpl implements PaymentService {
         return mapper.toDTO(payment);
     }
 
+    /**
+     * update payment in database, it will check following:
+     * 1. payment exists in database
+     * 2. validate if the payment is in pending state
+     * or else throw exception
+     *
+     * @param id {@link String} payment id
+     * @return {@link PaymentDTO} payment dto object
+     */
     @Override
     public PaymentDTO cancel(final String id) {
         log.info("Cancelling payment in process: {}", id);
@@ -96,7 +131,13 @@ public class PaymentServiceImpl implements PaymentService {
         return mapper.toDTO(payment);
     }
 
-
+    /**
+     * get all payment of customer from database
+     *
+     * @param pageable   {@link Pageable} pagination properties
+     * @param customerId {@link String} customer id
+     * @return {@link Page<PaymentDTO>} customer list with paginated properties
+     */
     @Override
     public Page<PaymentDTO> getAllPayments(final Pageable pageable, final String customerId) {
         log.info("Search payments in process");

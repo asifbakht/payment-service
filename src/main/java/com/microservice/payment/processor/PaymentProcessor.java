@@ -8,6 +8,13 @@ import net.javacrumbs.shedlock.spring.annotation.SchedulerLock;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+/**
+ * class that is responsible to process all pending payments
+ * this class will run on scheduler bases/
+ *
+ * @author Asif Bakht
+ * @since 2024
+ */
 @Log4j2
 @Component
 @RequiredArgsConstructor
@@ -20,6 +27,10 @@ class PaymentProcessor {
      * https://github.com/lukas-krecan/ShedLock#running-without-spring
      */
 
+    /**
+     * process pending payment scheduled wise with lock mechanism to avoid other
+     * instances to process those records.
+     */
     @Scheduled(cron = "${spring.cron.pending-payment}")
     @SchedulerLock(name = "pendingPaymentScheduler", lockAtLeastFor = "PT5S", lockAtMostFor = "PT10S")
     public void scheduledTask() {

@@ -10,6 +10,12 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * payment method related query resides here
+ *
+ * @author Asif Bakht
+ * @since 2024
+ */
 public interface PaymentMethodRepository extends JpaRepository<PaymentMethod, String> {
 
     @Query(value = "SELECT * FROM `payment_method` pm WHERE pm.customer_id = :customerId", nativeQuery = true)

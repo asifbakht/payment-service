@@ -4,6 +4,12 @@ import lombok.Getter;
 
 import java.util.stream.Stream;
 
+/**
+ * Different type of card validator regex pattern resides here
+ *
+ * @author Asif Bakht
+ * @since 2024
+ */
 @Getter
 public enum CardValidatorMap {
     AMEX("^3[47][0-9]{13}$"),
@@ -15,10 +21,21 @@ public enum CardValidatorMap {
 
     private final String regex;
 
+    /**
+     * Constructor with dependecy
+     *
+     * @param regex {@link String} regular expression
+     */
     CardValidatorMap(String regex) {
         this.regex = regex;
     }
 
+    /**
+     * return regular expression based on card type provided
+     *
+     * @param cardType {@link String} type of card
+     * @return {@link String} regular expression of provided card
+     */
     public static String getCardRegex(final String cardType) {
         return Stream.of(CardValidatorMap.values())
                 .filter(eachCardType -> eachCardType.name().equalsIgnoreCase(cardType))

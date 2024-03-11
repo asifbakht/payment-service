@@ -1,14 +1,19 @@
 package com.microservice.payment.exception;
 
 /**
- * duplicate exception when user register with same email
- * that already exists in db
+ * generic exception is used within application
+ * when unknown exception occurred
  *
  * @author Asif Bakht
- * @since 2023
+ * @since 2024
  */
 public class GenericException extends RuntimeException {
 
+    /**
+     * Constructor class with dependency
+     *
+     * @param message {@link String} exception message
+     */
     public GenericException(String message) {
         super(message);
     }

@@ -12,6 +12,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 
+/**
+ * Enum validator blueprint
+ *
+ * @author Asif Bakht
+ * @since 2024
+ */
 @Documented
 @Constraint(validatedBy = EnumValidatorImpl.class)
 @Retention(RetentionPolicy.RUNTIME)

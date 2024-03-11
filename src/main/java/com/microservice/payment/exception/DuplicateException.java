@@ -1,16 +1,21 @@
 package com.microservice.payment.exception;
 
 /**
- * duplicate exception when user register with same email
- * that already exists in db
- * 
+ * duplicate exception is used when same resources
+ * are trying to create
+ *
  * @author Asif Bakht
- * @since 2023
+ * @since 2024
  */
 public class DuplicateException extends RuntimeException {
 
-   public DuplicateException(String message) {
-      super(message);
-   }
+    /**
+     * Constructor class with dependency
+     *
+     * @param message {@link String} exception message
+     */
+    public DuplicateException(String message) {
+        super(message);
+    }
 
 }

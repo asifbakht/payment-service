@@ -8,6 +8,13 @@ import java.time.ZoneId;
 import static com.microservice.payment.utils.Constants.ZONE_UTC;
 import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 
+/**
+ * Helper class resides common functions that is accessible
+ * through application
+ *
+ * @author Asif Bakht
+ * @since 2024
+ */
 public class Helper {
 
     public static String getProcessingDateTime(final int processInDays) {

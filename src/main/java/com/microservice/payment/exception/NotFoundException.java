@@ -1,16 +1,21 @@
 package com.microservice.payment.exception;
 
 /**
- * not found exception when user login with email
- * that does not exists in db
- * 
+ * not found exception when user try to access resource
+ * that does not exists
+ *
  * @author Asif Bakht
- * @since 2023
+ * @since 2024
  */
 public class NotFoundException extends RuntimeException {
 
-   public NotFoundException(String message) {
-      super(message);
-   }
+    /**
+     * Constructor class with dependency
+     *
+     * @param message {@link String} exception message
+     */
+    public NotFoundException(String message) {
+        super(message);
+    }
 
 }

@@ -6,7 +6,10 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Value;
 
 /**
+ * class resides payment method payload properties
  *
+ * @author Asif Bakht
+ * @since 2024
  */
 @Value
 public class PaymentMethodDTO {

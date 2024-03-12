@@ -18,10 +18,14 @@ spring:
     properties:
       hibernate:
         format-sql: true
+  data:
+    redis:
+      repositories:
+        type: none
   ######## DB PROPERTIES ########
   datasource:
     #    url: jdbc:mysql://localhost/customer-db?createDatabaseIfNotExist=true
-    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/payment-db?createDatabaseIfNotExist=true
+    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}?createDatabaseIfNotExist=true
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
@@ -30,7 +34,7 @@ spring:
     hikari.maxLifetime: 1800000
   ######## DB MIGRATION ########
   flyway:
-    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/payment-db?createDatabaseIfNotExist=true
+    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}?createDatabaseIfNotExist=true
     user: ${DB_USERNAME}
     password: ${DB_PASSWORD}
     baseline:
@@ -62,7 +66,7 @@ resilience4j:
     instances:
       payment-service:
         failureRateThreshold: ${CB_FAILURE_THRESHOLD}
-        minimumNumberOfCalls: ${CB_FAILURE_MIN_N_CALL}
+        minimumNumberOfCalls: ${CB_FAILURE_MIN_NO_CALL}
         permittedNumberOfCallsInHalfOpenState: ${CB_FAILURE_PERMITTED_NO_CALLS_IN_HALF_OPEN_STATE}
         slidingWindowSize: ${CB_FAILURE_SLIDING_WINDOW}
         waitDurationInOpenState: ${CB_FAILURE_WAIT_DURATION_IN_OPEN_STATE}

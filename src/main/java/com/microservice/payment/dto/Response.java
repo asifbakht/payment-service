@@ -2,6 +2,7 @@ package com.microservice.payment.dto;
 
 import com.microservice.payment.dto.payment.PaymentDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Value;
 
 /**
  * generic class that is used to return response
@@ -10,6 +11,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
  * @author Asif Bakht
  * @since 2024
  */
-public record Response<T>(
-        @Schema(description = "Content", anyOf = { String.class, PaymentDTO.class}) T content) {
+@Value
+public class Response<T> {
+    @Schema(description = "Content", anyOf = {PaymentDTO.class, String.class})
+    private T content;
+
+    @Schema(description = "Status code")
+    private int statusCode;
 }

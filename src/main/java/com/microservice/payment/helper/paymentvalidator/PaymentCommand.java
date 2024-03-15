@@ -4,6 +4,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Command pattern builder that collects all command and execute
+ *
+ * @author Asif Bakht
+ * @since 2024
+ */
 public class PaymentCommand {
     final List<Command<?>> commands;
     final List<Object> result;
@@ -13,12 +19,20 @@ public class PaymentCommand {
         this.result = new ArrayList<>();
     }
 
+    /**
+     * return all command execution result
+     *
+     * @return {@link List<?>} list of all commands result
+     */
     public List<?> executeAll() {
-        for(var eachCommand: commands)
+        for (var eachCommand : commands)
             result.add(eachCommand.execute());
         return result;
     }
 
+    /**
+     * Builder class that build commands
+     */
     public static class CommandBuilder {
         private final List<Command<?>> commands = new ArrayList<>();
 

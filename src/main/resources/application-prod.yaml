@@ -1,13 +1,17 @@
 server:
   port: ${CONTAINER_PORT}
   shutdown: graceful
-
+  ######### SPRING BASED PATH ################
+management:
+  endpoints:
+    web:
+      base-path: /
 spring:
   application:
     name: payment-service
   mvc:
     servlet:
-      path: /api/v1/payment
+      path: ${CONTAINER_BASE_PATH}
   threads:
     virtual:
       enabled: true #Spring 3.2 feature
@@ -29,9 +33,9 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
-    hikari.connectionTimeout: 100000
-    hikari.idleTimeout: 600000
-    hikari.maxLifetime: 1800000
+    hikari.connectionTimeout: ${DB_CONNECTION_TIME_OUT}
+    hikari.idleTimeout: ${DB_IDLE_TIME_OUT}
+    hikari.maxLifetime: ${DB_MAX_LIFE_TIME_OUT}
   ######## DB MIGRATION ########
   flyway:
     url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}?createDatabaseIfNotExist=true
@@ -51,9 +55,9 @@ spring:
   ######## SPRINT DOC ########
 springdoc:
   api-docs:
-    path: /authentication-docs
+    path: /docs
   swagger-ui:
-    path: /authentication-docs/swagger-ui-custom.html
+    path: /docs/swagger-ui.html
   show-actuator: true
   ######## LOGGING ########
 logging:

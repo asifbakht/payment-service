@@ -1,13 +1,17 @@
 server:
   port: 9999
   shutdown: graceful
-
+  ######### SPRING BASED PATH ################
+management:
+  endpoints:
+    web:
+      base-path: /
 spring:
   application:
     name: payment-service
   mvc:
     servlet:
-      path: /api/v1/payment
+      path: /api/v1
   threads:
     virtual:
       enabled: true #Spring 3.2 feature
@@ -46,9 +50,9 @@ spring:
   ######## SPRING DOC ########
 springdoc:
   api-docs:
-    path: /authentication-docs
+    path: /docs
   swagger-ui:
-    path: /authentication-docs/swagger-ui-custom.html
+    path: /docs/swagger-ui.html
   show-actuator: true
   ######## LOGGING ########
 logging:
